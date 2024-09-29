@@ -1,4 +1,10 @@
 import { dates } from '/utils/dates'
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+});
 
 const tickersArr = []
 
