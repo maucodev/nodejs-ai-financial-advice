@@ -1,11 +1,6 @@
 import { dates } from '/utils/dates'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
-
 const tickersArr = []
 
 const generateReportBtn = document.querySelector('.generate-report-btn')
@@ -66,6 +61,33 @@ async function fetchStockData() {
 }
 
 async function fetchReport(data) {
+    const messages = [
+        {
+            role: "system",
+            content: "You are a trading guru. Given data on share prices over the past 3 days, write a report of no more than 150 words describing the stocks performance and recommending whether to buy, hold or sell."
+        },
+        {
+            role: "user",
+            content: data
+        }
+    ]
+
+    try {
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+            dangerouslyAllowBrowser: true
+        });
+
+        const response = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: messages
+        })
+
+        renderReport(response.choices[0].message.content)
+    } catch (err) {
+        loadingArea.innerText = 'There was an error fetching report.'
+        console.error('error: ', err)
+    }
 }
 
 function renderReport(output) {
