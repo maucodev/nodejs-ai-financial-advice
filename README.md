@@ -1,5 +1,7 @@
 # AI Financial Advice
 
+A Node.js-based project that integrates AI services to provide financial advice and insights. It's designed to showcase the use of AI APIs, such as OpenAI, in generating insights, with a focus on demonstrating the potential of AI for developers in the financial domain.
+
 ## Prerequisites
 
 Before running the project, you must set up the following environment variables to authenticate with the required APIs:
